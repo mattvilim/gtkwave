@@ -1732,17 +1732,38 @@ void signallist_scroll(char dir) {
     }
     case 'u': {
       t = GLOBALS->traces.last;
-      search = &GivePrevTrace; break;
+      search = &GivePrevTrace;
+      break;
     }
   }
+	for (Trptr a = GLOBALS->traces.last; a; a = GivePrevTrace(a)) {
+    printf("%s begin:%d end:%d \n", a->name, IsGroupBegin(a), IsGroupEnd(a));
+  }
 	for (; t; t = search(t)) {
-    if (t->flags & TR_HIGHLIGHT) break;
+    if (IsSelected(t)) break;
+  }
+  if (dir == 'u') {
+    for (Trptr a = t; a; a = search(a)) {
+      if (IsSelected(a)) t = a;
+    }
+  }
+  if (IsGroupEnd(t)) {
+    printf("test\n");
+    t = t->t_match;
   }
   Trptr t2 = search(t);
   if (t2) {
-	  t->flags &= ~TR_HIGHLIGHT;
+    if(IsGroupBegin(t)) {
+      ClearGroupTraces(t);
+    } else if (IsGroupEnd(t)) {
+      ClearGroupTraces(t);
+    } else {
+      t->flags &= ~TR_HIGHLIGHT;
+    }
 	  t2->flags |= TR_HIGHLIGHT;
   }
+  GLOBALS->starting_unshifted_trace = t;
+	GLOBALS->standard_trace_dnd_degate = 0;
 
 	GLOBALS->signalwindow_width_dirty=1;
 			MaxSignalLength();
