@@ -1720,4 +1720,32 @@ void remove_keypress_handler(gint id)
 gtk_signal_disconnect(GTK_OBJECT(GLOBALS->mainwindow), id);
 }
 
+void signallist_scroll(char dir) {
+  Trptr t;
+  Trptr (*search)(Trptr) = NULL;
 
+  switch (dir) {
+    case 'd': {
+      t = GLOBALS->traces.first;
+      search = &GiveNextTrace;
+      break;
+    }
+    case 'u': {
+      t = GLOBALS->traces.last;
+      search = &GivePrevTrace; break;
+    }
+  }
+	for (; t; t = search(t)) {
+    if (t->flags & TR_HIGHLIGHT) break;
+  }
+  Trptr t2 = search(t);
+  if (t2) {
+	  t->flags &= ~TR_HIGHLIGHT;
+	  t2->flags |= TR_HIGHLIGHT;
+  }
+
+	GLOBALS->signalwindow_width_dirty=1;
+			MaxSignalLength();
+			signalarea_configure_event(GLOBALS->signalarea, NULL);
+			wavearea_configure_event(GLOBALS->wavearea, NULL);
+}

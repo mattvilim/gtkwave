@@ -597,6 +597,15 @@ if(GLOBALS->helpbox_is_active)
 	}
 }
 
+void menu_signal_up(gpointer null_data, guint callback_action, GtkWidget *widget)
+{
+    signallist_scroll('u');
+}
+
+void menu_signal_down(gpointer null_data, guint callback_action, GtkWidget *widget)
+{
+  signallist_scroll('d');
+}
 
 /********** transaction procsel filter install ********/
 
@@ -7668,7 +7677,7 @@ static gtkwave_mlist_t menu_items[] =
     WAVE_GTKIFE("/File/Write Save File", "<Control>S", menu_write_save_file, WV_MENU_FWSF, "<Item>"),
     WAVE_GTKIFE("/File/Write Save File As", "<Shift><Control>S", menu_write_save_file_as, WV_MENU_FWSFAS, "<Item>"),
     WAVE_GTKIFE("/File/<separator>", NULL, NULL, WV_MENU_SEP2, "<Separator>"),
-    WAVE_GTKIFE("/File/Read Sim Logfile", "L", menu_read_log_file, WV_MENU_FRLF, "<Item>"),
+    WAVE_GTKIFE("/File/Read Sim Logfile", NULL, menu_read_log_file, WV_MENU_FRLF, "<Item>"),
       /* 10 */
     WAVE_GTKIFE("/File/<separator>", NULL, NULL, WV_MENU_SEP2LF, "<Separator>"),
 #if !defined _MSC_VER
@@ -7683,7 +7692,7 @@ static gtkwave_mlist_t menu_items[] =
     WAVE_GTKIFE("/File/Quit", "<Control>Q", menu_quit, WV_MENU_FQY, "<Item>"),
 
     WAVE_GTKIFE("/Edit/Set Trace Max Hier", NULL, menu_set_max_hier, WV_MENU_ESTMH, "<Item>"),
-    WAVE_GTKIFE("/Edit/Toggle Trace Hier", "H", menu_toggle_hier, WV_MENU_ETH, "<Item>"),
+    WAVE_GTKIFE("/Edit/Toggle Trace Hier", NULL, menu_toggle_hier, WV_MENU_ETH, "<Item>"),
     WAVE_GTKIFE("/Edit/<separator>", NULL, NULL, WV_MENU_SEP3, "<Separator>"),
     WAVE_GTKIFE("/Edit/Insert Blank", "<Control>B", menu_insert_blank_traces, WV_MENU_EIB, "<Item>"),
     WAVE_GTKIFE("/Edit/Insert Comment", NULL, menu_insert_comment_traces, WV_MENU_EIC, "<Item>"),
@@ -7824,9 +7833,9 @@ static gtkwave_mlist_t menu_items[] =
     WAVE_GTKIFE("/Time/Move To Time", "F1", menu_movetotime, WV_MENU_TMTT, "<Item>"),
     WAVE_GTKIFE("/Time/Zoom/Zoom Amount", "F2", menu_zoomsize, WV_MENU_TZZA, "<Item>"),
     WAVE_GTKIFE("/Time/Zoom/Zoom Base", "<Shift>F2", menu_zoombase, WV_MENU_TZZB, "<Item>"),
-    WAVE_GTKIFE("/Time/Zoom/Zoom In", "<Alt>Z", service_zoom_in_marshal, WV_MENU_TZZI, "<Item>"),
-    WAVE_GTKIFE("/Time/Zoom/Zoom Out", "<Shift><Alt>Z", service_zoom_out_marshal, WV_MENU_TZZO, "<Item>"),
-    WAVE_GTKIFE("/Time/Zoom/Zoom Full", "<Alt>F", service_zoom_full_marshal, WV_MENU_TZZBFL, "<Item>"),
+    WAVE_GTKIFE("/Time/Zoom/Zoom In", "U", service_zoom_in_marshal, WV_MENU_TZZI, "<Item>"),
+    WAVE_GTKIFE("/Time/Zoom/Zoom Out", "D", service_zoom_out_marshal, WV_MENU_TZZO, "<Item>"),
+    WAVE_GTKIFE("/Time/Zoom/Zoom Full", "F", service_zoom_full_marshal, WV_MENU_TZZBFL, "<Item>"),
     WAVE_GTKIFE("/Time/Zoom/Zoom Best Fit", "<Shift><Alt>F", service_zoom_fit_marshal, WV_MENU_TZZBF, "<Item>"),
     WAVE_GTKIFE("/Time/Zoom/Zoom To Start", "Home", service_zoom_left_marshal, WV_MENU_TZZTS, "<Item>"),
     WAVE_GTKIFE("/Time/Zoom/Zoom To End", "End", service_zoom_right_marshal, WV_MENU_TZZTE, "<Item>"),
@@ -7853,15 +7862,15 @@ static gtkwave_mlist_t menu_items[] =
 #endif
     WAVE_GTKIFE("/Markers/Delete Primary Marker", "<Shift><Alt>M", delete_unnamed_marker, WV_MENU_MDPM, "<Item>"),
     WAVE_GTKIFE("/Markers/<separator>", NULL, NULL, WV_MENU_SEP8, "<Separator>"),
-    WAVE_GTKIFE("/Markers/Find Previous Edge", NULL, service_left_edge_marshal, WV_MENU_SLE, "<Item>"),
-    WAVE_GTKIFE("/Markers/Find Next Edge", NULL, service_right_edge_marshal, WV_MENU_SRE, "<Item>"),
+    WAVE_GTKIFE("/Markers/Find Previous Edge", "H", service_left_edge_marshal, WV_MENU_SLE, "<Item>"),
+    WAVE_GTKIFE("/Markers/Find Next Edge", "L", service_right_edge_marshal, WV_MENU_SRE, "<Item>"),
     WAVE_GTKIFE("/Markers/<separator>", NULL, NULL, WV_MENU_SEP8B, "<Separator>"),
     WAVE_GTKIFE("/Markers/Alternate Wheel Mode", NULL, menu_altwheel, WV_MENU_HSWM, "<ToggleItem>"),
     WAVE_GTKIFE("/Markers/Wave Scrolling", "F9", wave_scrolling_on, WV_MENU_MWSON, "<ToggleItem>"),
 
     WAVE_GTKIFE("/Markers/Locking/Lock to Lesser Named Marker", "Q", lock_marker_left, WV_MENU_MLKLT, "<Item>"),
     WAVE_GTKIFE("/Markers/Locking/Lock to Greater Named Marker", "W", lock_marker_right, WV_MENU_MLKRT, "<Item>"),
-    WAVE_GTKIFE("/Markers/Locking/Unlock from Named Marker", "O", unlock_marker, WV_MENU_MLKOFF, "<Item>"),
+    WAVE_GTKIFE("/Markers/Locking/Unlock from Named Marker", NULL, unlock_marker, WV_MENU_MLKOFF, "<Item>"),
 
     WAVE_GTKIFE("/View/Show Grid", "<Alt>G", menu_show_grid, WV_MENU_VSG, "<ToggleItem>"),
     WAVE_GTKIFE("/View/<separator>", NULL, NULL, WV_MENU_SEP9, "<Separator>"),
@@ -7914,6 +7923,8 @@ static gtkwave_mlist_t menu_items[] =
     WAVE_GTKIFE("/View/Scale To Time Dimension/ns",   NULL, menu_scale_to_td_n, WV_MENU_TDSCALEN, "<ToggleItem>"),
     WAVE_GTKIFE("/View/Scale To Time Dimension/ps",   NULL, menu_scale_to_td_p, WV_MENU_TDSCALEP, "<ToggleItem>"),
     WAVE_GTKIFE("/View/Scale To Time Dimension/fs",   NULL, menu_scale_to_td_f, WV_MENU_TDSCALEF, "<ToggleItem>"),
+    WAVE_GTKIFE("/View/SignalUp", "K", menu_signal_up, WV_MENU_TREE, "<Item>"),
+    WAVE_GTKIFE("/View/SignalDown", "J", menu_signal_down, WV_MENU_TREE, "<Item>"),
 
       /* 130 */
     WAVE_GTKIFE("/Help/WAVE Help", "<Control>H", menu_help, WV_MENU_HWH, "<Item>"),
