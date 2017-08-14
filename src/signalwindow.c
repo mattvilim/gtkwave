@@ -492,6 +492,18 @@ if(GTK_WIDGET_HAS_FOCUS(GLOBALS->signalarea_event_box))
 		    }
 		  break;
 #endif
+		case GDK_j:
+			signallist_scroll('d');
+			break;
+		case GDK_k:
+			signallist_scroll('u');
+			break;
+		case GDK_h:
+			service_left_edge(NULL, NULL); 
+			break;
+		case GDK_l:
+			service_right_edge(NULL, NULL); 
+			break;
 		case GDK_Page_Up:
 		case GDK_KP_Page_Up:
 		case GDK_Page_Down:
@@ -1747,26 +1759,29 @@ void signallist_scroll(char dir) {
       if (IsSelected(a)) t = a;
     }
   }
-  if (IsGroupEnd(t)) {
-    printf("test\n");
-    t = t->t_match;
-  }
-  Trptr t2 = search(t);
-  if (t2) {
-    if(IsGroupBegin(t)) {
-      ClearGroupTraces(t);
-    } else if (IsGroupEnd(t)) {
-      ClearGroupTraces(t);
-    } else {
-      t->flags &= ~TR_HIGHLIGHT;
-    }
-	  t2->flags |= TR_HIGHLIGHT;
-  }
-  GLOBALS->starting_unshifted_trace = t;
-	GLOBALS->standard_trace_dnd_degate = 0;
+	if (t) {
+		if (IsGroupEnd(t)) {
+			printf("test\n");
+			t = t->t_match;
+		}
+  	Trptr t2 = search(t);
+		if (t2) {
+			if(IsGroupBegin(t)) {
+				ClearGroupTraces(t);
+			} else if (IsGroupEnd(t)) {
+				ClearGroupTraces(t);
+			} else {
+				t->flags &= ~TR_HIGHLIGHT;
+			}
+			t2->flags |= TR_HIGHLIGHT;
 
-	GLOBALS->signalwindow_width_dirty=1;
-			MaxSignalLength();
-			signalarea_configure_event(GLOBALS->signalarea, NULL);
-			wavearea_configure_event(GLOBALS->wavearea, NULL);
+			GLOBALS->starting_unshifted_trace = t;
+			GLOBALS->standard_trace_dnd_degate = 0;
+
+			GLOBALS->signalwindow_width_dirty=1;
+					MaxSignalLength();
+					signalarea_configure_event(GLOBALS->signalarea, NULL);
+					wavearea_configure_event(GLOBALS->wavearea, NULL);
+		}
+	}
 }
