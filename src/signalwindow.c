@@ -1748,9 +1748,6 @@ void signallist_scroll(char dir) {
       break;
     }
   }
-	for (Trptr a = GLOBALS->traces.last; a; a = GivePrevTrace(a)) {
-    printf("%s begin:%d end:%d \n", a->name, IsGroupBegin(a), IsGroupEnd(a));
-  }
 	for (; t; t = search(t)) {
     if (IsSelected(t)) break;
   }
@@ -1761,7 +1758,6 @@ void signallist_scroll(char dir) {
   }
 	if (t) {
 		if (IsGroupEnd(t)) {
-			printf("test\n");
 			t = t->t_match;
 		}
   	Trptr t2 = search(t);
@@ -1783,5 +1779,8 @@ void signallist_scroll(char dir) {
 					signalarea_configure_event(GLOBALS->signalarea, NULL);
 					wavearea_configure_event(GLOBALS->wavearea, NULL);
 		}
+	} else {
+      t = GLOBALS->traces.first;
+			if (t) t->flags |= TR_HIGHLIGHT;
 	}
 }

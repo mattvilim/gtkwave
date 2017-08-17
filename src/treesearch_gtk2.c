@@ -1050,9 +1050,6 @@ GLOBALS->bundle_direction_treesearch_gtk2_c_3=1;
 bundle_callback_generic();
 }
 
-/* Callback for insert/replace/append buttions.
-   This call-back is called for every signal selected.  */
-enum cb_action { ACTION_INSERT, ACTION_REPLACE, ACTION_APPEND, ACTION_PREPEND };
 
 
 
@@ -1260,7 +1257,7 @@ sig_selection_foreach_preload_lx2
 }
 
 
-static void
+void
 action_callback(enum cb_action action)
 {
   GLOBALS->pre_import_treesearch_gtk2_c_1 = 0;

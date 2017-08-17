@@ -607,6 +607,16 @@ void menu_select_wave(gpointer null_data, guint callback_action, GtkWidget *widg
     gtk_widget_grab_focus(GLOBALS->signalarea_event_box);
 }
 
+void menu_select_tree(gpointer null_data, guint callback_action, GtkWidget *widget)
+{
+    gtk_widget_grab_focus(GLOBALS->ctree_main);
+}
+
+void menu_add_sig(gpointer null_data, guint callback_action, GtkWidget *widget)
+{
+    action_callback(ACTION_APPEND);
+}
+
 /********** transaction procsel filter install ********/
 
 void menu_dataformat_xlate_ttrans_1(gpointer null_data, guint callback_action, GtkWidget *widget)
@@ -7896,7 +7906,7 @@ static gtkwave_mlist_t menu_items[] =
     WAVE_GTKIFE("/View/<separator>", NULL, NULL, WV_MENU_SEP13, "<Separator>"),
     WAVE_GTKIFE("/View/Constant Marker Update", "F11", menu_enable_constant_marker_update, WV_MENU_VCMU, "<ToggleItem>"),
     WAVE_GTKIFE("/View/<separator>", NULL, NULL, WV_MENU_SEP14, "<Separator>"),
-    WAVE_GTKIFE( NULL, "<Alt>F2", menu_use_roundcaps, WV_MENU_VDRV, "<ToggleItem>"),
+    WAVE_GTKIFE("/View/Draw Round Cap Vectors", "<Alt>F2", menu_use_roundcaps, WV_MENU_VDRV, "<ToggleItem>"),
       /* 120 */
     WAVE_GTKIFE("/View/<separator>", NULL, NULL, WV_MENU_SEP15, "<Separator>"),
     WAVE_GTKIFE("/View/Left Justified Signals", "<Shift>Home", menu_left_justify, WV_MENU_VLJS, "<Item>"),
@@ -7923,8 +7933,10 @@ static gtkwave_mlist_t menu_items[] =
     WAVE_GTKIFE("/View/Scale To Time Dimension/ns",   NULL, menu_scale_to_td_n, WV_MENU_TDSCALEN, "<ToggleItem>"),
     WAVE_GTKIFE("/View/Scale To Time Dimension/ps",   NULL, menu_scale_to_td_p, WV_MENU_TDSCALEP, "<ToggleItem>"),
     WAVE_GTKIFE("/View/Scale To Time Dimension/fs",   NULL, menu_scale_to_td_f, WV_MENU_TDSCALEF, "<ToggleItem>"),
+    WAVE_GTKIFE("/View/Add", "I", menu_add_sig, WV_MENU_ADD, "<Item>"),
     WAVE_GTKIFE("/View/Select Signal", "S", menu_select_signal, WV_MENU_TREE, "<Item>"),
     WAVE_GTKIFE("/View/Select Wave", "W", menu_select_wave, WV_MENU_TREE, "<Item>"),
+    WAVE_GTKIFE("/View/Select Tree", "X", menu_select_tree, WV_MENU_TREE, "<Item>"),
 
       /* 130 */
     WAVE_GTKIFE("/Help/WAVE Help", "<Control>H", menu_help, WV_MENU_HWH, "<Item>"),

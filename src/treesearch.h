@@ -10,6 +10,10 @@
 #ifndef WAVE_TREESEARCH_H
 #define WAVE_TREESEARCH_H
 
+/* Callback for insert/replace/append buttions.
+   This call-back is called for every signal selected.  */
+enum cb_action { ACTION_INSERT, ACTION_REPLACE, ACTION_APPEND, ACTION_PREPEND };
+
 void treebox(char *title, GtkSignalFunc func, GtkWidget *old_window);
 GtkWidget* treeboxframe(char *title, GtkSignalFunc func);
 void mkmenu_treesearch_cleanup(GtkWidget *widget, gpointer data);
@@ -23,6 +27,7 @@ struct tree *fetchlow(struct tree *t);
 struct tree *fetchhigh(struct tree *t);
 void fetchvex(struct tree *t, char direction);
 int treebox_is_active(void);
+void action_callback(enum cb_action action);
 
 #if WAVE_USE_GTK2
 void DND_helper_quartz(char *data);
