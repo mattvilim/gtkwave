@@ -523,11 +523,14 @@ static gboolean keypress_callback(GtkCTree *ctree, GdkEventKey *event, gpointer 
 {
 (void)ctree;
 (void)user_data;
-if (event->keyval == GDK_j || event->keyval == GDK_k || event->keyval == GDK_Return) {
+if (event->keyval == GDK_j || event->keyval == GDK_k || event->keyval == GDK_Return ||
+    event->keyval == GDK_a || event->keyval == GDK_i) {
   guint keyval;
   switch (event->keyval) {
     case GDK_j: keyval = GDK_Down; break;
     case GDK_k: keyval = GDK_Up; break;
+    case GDK_a: action_callback(ACTION_APPEND); break;
+    case GDK_i: action_callback(ACTION_INSERT); break;
     case GDK_Return: keyval = GDK_plus; break;
   }
   

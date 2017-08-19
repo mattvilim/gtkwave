@@ -612,11 +612,6 @@ void menu_select_tree(gpointer null_data, guint callback_action, GtkWidget *widg
     gtk_widget_grab_focus(GLOBALS->ctree_main);
 }
 
-void menu_add_sig(gpointer null_data, guint callback_action, GtkWidget *widget)
-{
-    action_callback(ACTION_APPEND);
-}
-
 /********** transaction procsel filter install ********/
 
 void menu_dataformat_xlate_ttrans_1(gpointer null_data, guint callback_action, GtkWidget *widget)
@@ -7933,7 +7928,6 @@ static gtkwave_mlist_t menu_items[] =
     WAVE_GTKIFE("/View/Scale To Time Dimension/ns",   NULL, menu_scale_to_td_n, WV_MENU_TDSCALEN, "<ToggleItem>"),
     WAVE_GTKIFE("/View/Scale To Time Dimension/ps",   NULL, menu_scale_to_td_p, WV_MENU_TDSCALEP, "<ToggleItem>"),
     WAVE_GTKIFE("/View/Scale To Time Dimension/fs",   NULL, menu_scale_to_td_f, WV_MENU_TDSCALEF, "<ToggleItem>"),
-    WAVE_GTKIFE("/View/Add", "I", menu_add_sig, WV_MENU_ADD, "<Item>"),
     WAVE_GTKIFE("/View/Select Signal", "S", menu_select_signal, WV_MENU_TREE, "<Item>"),
     WAVE_GTKIFE("/View/Select Wave", "W", menu_select_wave, WV_MENU_TREE, "<Item>"),
     WAVE_GTKIFE("/View/Select Tree", "X", menu_select_tree, WV_MENU_TREE, "<Item>"),
