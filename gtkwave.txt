@@ -1,0 +1,24 @@
+w: wave window
+x: tree window
+s: signal window
+
+wave window:
+  f: zoom to show all
+  u: zoom in
+  d: zoom out
+  j: signal down
+  k: signal up
+  h: go to left signal change
+  l: go to right signal change
+
+tree window:
+  j: down
+  k: up
+  space: expand
+  enter: go into
+
+signal window:
+  j: down
+  k: up
+  a: add signal
+  i: insert signal
